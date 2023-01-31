@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "sibyl_javascript_client": "^0.13.1",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
