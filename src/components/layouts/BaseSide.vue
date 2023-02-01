@@ -16,7 +16,7 @@
       <span>Settings</span>
     </el-menu-item>
     <el-menu-item index="/about">
-      <el-icon><icon-question /></el-icon>
+      <el-icon><info-filled /></el-icon>
       <span>About</span>
     </el-menu-item>
   </el-menu>
@@ -24,5 +24,5 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { Menu as IconMenu, Setting } from "@element-plus/icons-vue";
+import { Menu as IconMenu, Setting, InfoFilled } from "@element-plus/icons-vue";
 </script>
