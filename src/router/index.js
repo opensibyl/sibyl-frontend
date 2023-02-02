@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-const home = () => import("../components/Home.vue");
 const about = () => import("../components/About.vue");
 const settings = () => import("../components/Settings.vue");
 const funcbasic = () => import("../components/FuncFileQuery.vue");
@@ -7,12 +6,7 @@ const funcbasic = () => import("../components/FuncFileQuery.vue");
 const routes = [
   {
     path: "/",
-    redirect: "/home",
-  },
-  {
-    path: "/home",
-    name: "home",
-    component: home,
+    redirect: "/about",
   },
   {
     path: "/about",
@@ -25,8 +19,8 @@ const routes = [
     component: settings,
   },
   {
-    path: "/func/basic",
-    name: "func/basic",
+    path: "/file/basic",
+    name: "file/basic",
     component: funcbasic,
   },
 ];

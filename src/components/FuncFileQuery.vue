@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 import { ElNotification } from "element-plus";
 import { useSettingStore } from "../stores/setting";
@@ -38,6 +38,7 @@ onMounted(() => {
 
 const settingStore = useSettingStore();
 const curFile = ref("");
+
 const fileList = ref([]);
 const funcResult = ref("");
 const classResult = ref("");
@@ -122,28 +123,29 @@ const pullAll = () => {
 </script>
 
 <template>
-  <el-form label-width="120px">
-    <el-form-item>
+  <el-form>
+    <el-form-item label="所选文件" class="m-3">
       <el-select
         v-model="curFile"
-        class="m-4"
         placeholder="Select File"
         size="large"
         clearable
         filterable
+        v-on:change="checkFilled"
       >
         <el-option
           v-for="item in fileList"
           :key="item"
           :label="item"
           :value="item"
-        />
-      </el-select>
-      <el-button @click="requestFile" class="m-3" style="width: fit-content"
-        >Sync File List</el-button
+        /> </el-select
+    ></el-form-item>
+    <el-form-item class="m-3">
+      <el-button @click="requestFile" style="width: fit-content"
+        >刷新文件列表</el-button
       >
-      <el-button @click="pullAll" class="m-3" style="width: fit-content"
-        >Pull Data</el-button
+      <el-button @click="pullAll" style="width: fit-content" type="primary"
+        >开始拉取逻辑</el-button
       >
     </el-form-item>
 

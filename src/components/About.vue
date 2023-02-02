@@ -1,15 +1,27 @@
 <template>
-  <el-form label-width="120px" style="margin: 20px">
-    <p>We need your help :)</p>
-    <el-form-item label="Issue">
-      <a href="https://github.com/opensibyl/sibyl2/issues/25"
-        >https://github.com/opensibyl/sibyl2/issues/25</a
-      >
-    </el-form-item>
-    <el-form-item label="Repo">
-      <a href="https://github.com/opensibyl/sibyl-frontend"
-        >https://github.com/opensibyl/sibyl-frontend</a
-      >
-    </el-form-item>
-  </el-form>
+  <el-descriptions
+    title="About This Project"
+    :column="1"
+    :size="size"
+    border
+    style="margin: 20px"
+  >
+    <el-descriptions-item label="Documentation"
+      >https://opensibyl.github.io/doc/</el-descriptions-item
+    >
+    <el-descriptions-item label="Contact us"
+      >https://github.com/opensibyl/sibyl2/issues/25</el-descriptions-item
+    >
+    <el-descriptions-item label="Github repo"
+      >https://github.com/opensibyl/sibyl-frontend</el-descriptions-item
+    >
+  </el-descriptions>
 </template>
+
+<style scoped>
+.board {
+  overflow: auto;
+  width: 50%;
+  height: 100%;
+}
+</style>

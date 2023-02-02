@@ -59,7 +59,10 @@ requestRepo();
 
 <template>
   <el-menu class="el-menu-demo" mode="horizontal" :ellipsis="false" router>
-    <el-menu-item style="height: var(--ep-menu-item-height)" index="" h="full"
+    <el-menu-item
+      style="height: var(--ep-menu-item-height)"
+      index="/about"
+      h="full"
       ><h2>OpenSibyl</h2></el-menu-item
     >
 
