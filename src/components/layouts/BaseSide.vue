@@ -11,14 +11,19 @@
       <el-icon><icon-menu /></el-icon>
       <span>BasicFunction</span>
     </el-menu-item>
-    <el-menu-item index="/settings">
+    <!-- <el-menu-item index="/settings">
       <el-icon><setting /></el-icon>
       <span>Settings</span>
-    </el-menu-item>
+    </el-menu-item> -->
   </el-menu>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { Menu as IconMenu, Setting, InfoFilled } from "@element-plus/icons-vue";
+import {
+  Menu as IconMenu,
+  Setting,
+  InfoFilled,
+  RefreshRight,
+} from "@element-plus/icons-vue";
 </script>

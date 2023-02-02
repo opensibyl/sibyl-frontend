@@ -1,9 +1,60 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { toggleDark } from "~/composables";
-import { Menu as IconMenu, Setting, InfoFilled } from "@element-plus/icons-vue";
+import {
+  Menu as IconMenu,
+  Setting,
+  InfoFilled,
+  RefreshRight,
+} from "@element-plus/icons-vue";
 import { useSettingStore } from "../../stores/setting";
+import { ElMessage } from "element-plus";
+import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
+
 const settingStore = useSettingStore();
+const backendUrl = ref(settingStore.backendUrl);
+
+const repoList = ref([]);
+const revList = ref([]);
+
+const requestRepo = () => {
+  var apiClient = settingStore.getApiClient();
+  var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
+  var callback = function (error, data, response) {
+    if (error) {
+      ElMessage.error(JSON.stringify(error));
+      repoList.value = [];
+    } else {
+      repoList.value = response.body;
+    }
+  };
+  api.apiV1RepoGet(callback);
+};
+
+const requestRev = () => {
+  var apiClient = settingStore.getApiClient();
+  var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
+  var callback = function (error, data, response) {
+    if (error) {
+      ElMessage.error(JSON.stringify(error));
+      revList.value = [];
+    } else {
+      revList.value = response.body;
+    }
+  };
+  api.apiV1RevGet(settingStore.curRepo, callback);
+};
+
+const sync = () => {
+  if (settingStore.curRepo == "") {
+    requestRepo();
+  }
+  if (settingStore.curRepo != "") {
+    requestRev();
+  }
+};
+
+requestRepo();
 </script>
 
 <template>
@@ -11,12 +62,54 @@ const settingStore = useSettingStore();
     <el-menu-item style="height: var(--ep-menu-item-height)" index="" h="full"
       ><h2>OpenSibyl</h2></el-menu-item
     >
-    <el-menu-item h="full"
-      >Current backend: {{ settingStore.backendUrl }}</el-menu-item
-    >
-    <el-menu-item h="full"
-      >Connected: {{ settingStore.backendStatus }}</el-menu-item
-    >
+
+    <el-container>
+      <el-input
+        class="m-2"
+        v-model="backendUrl"
+        size="large"
+        style="width: fit-content"
+        ><template #prepend>http://</template></el-input
+      >
+      <el-select
+        v-model="settingStore.curRepo"
+        class="m-2"
+        placeholder="Repo"
+        size="large"
+        clearable
+        v-on:change="sync"
+        filterable
+      >
+        <el-option
+          v-for="item in repoList"
+          :key="item"
+          :label="item"
+          :value="item"
+        />
+      </el-select>
+
+      <el-select
+        v-model="settingStore.curRev"
+        class="m-2"
+        placeholder="Rev"
+        size="large"
+        clearable
+        filterable
+      >
+        <el-option
+          v-for="item in revList"
+          :key="item"
+          :label="item"
+          :value="item"
+        />
+      </el-select>
+      <el-button @click="sync" class="m-3" style="width: fit-content">
+        <el-icon style="height: var(--ep-menu-item-height)"
+          ><RefreshRight
+        /></el-icon>
+        Refresh
+      </el-button>
+    </el-container>
 
     <div class="flex-grow" />
     <el-menu-item h="full" index="/about">

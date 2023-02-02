@@ -5,17 +5,16 @@ import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 import { useSettingStore } from "../stores/setting";
 const settingStore = useSettingStore();
 
-const input = ref(settingStore.backendUrl);
+const backendUrl = ref(settingStore.backendUrl);
 
 const save = () => {
-  settingStore.backendUrl = input.value;
+  settingStore.backendUrl = backendUrl.value;
   ElMessage.success("url saved");
 };
 
 const testConnection = () => {
-  var apiClient = new OpenapiForSibyl2Server.ApiClient(settingStore.backendUrl);
+  var apiClient = settingStore.getApiClient();
   var api = new OpenapiForSibyl2Server.OpsApi(apiClient);
-  let that = this;
   var callback = function (error, data, response) {
     if (error) {
       ElMessage.error(JSON.stringify(error));
@@ -32,7 +31,7 @@ const testConnection = () => {
 <template>
   <el-form label-width="120px" style="margin: 20px">
     <el-form-item label="Backend Url">
-      <el-input v-model="input" />
+      <el-input v-model="backendUrl" />
     </el-form-item>
     <el-form-item>
       <el-button @click="save" type="primary">Save</el-button>
