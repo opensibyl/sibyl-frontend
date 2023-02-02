@@ -8,7 +8,7 @@ import {
   RefreshRight,
 } from "@element-plus/icons-vue";
 import { useSettingStore } from "../../stores/setting";
-import { ElMessage } from "element-plus";
+import { ElNotification } from "element-plus";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 
 const settingStore = useSettingStore();
@@ -22,7 +22,7 @@ const requestRepo = () => {
   var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
       repoList.value = [];
     } else {
       repoList.value = response.body;
@@ -36,7 +36,7 @@ const requestRev = () => {
   var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
       revList.value = [];
     } else {
       revList.value = response.body;

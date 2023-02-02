@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
+import { ElNotification } from "element-plus";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 import { useSettingStore } from "../stores/setting";
 const settingStore = useSettingStore();
@@ -9,7 +9,7 @@ const backendUrl = ref(settingStore.backendUrl);
 
 const save = () => {
   settingStore.backendUrl = backendUrl.value;
-  ElMessage.success("url saved");
+  ElNotification.success("url saved");
 };
 
 const testConnection = () => {
@@ -17,10 +17,10 @@ const testConnection = () => {
   var api = new OpenapiForSibyl2Server.OpsApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
       settingStore.backendStatus = false;
     } else {
-      ElMessage.success(JSON.stringify(response.body));
+      ElNotification.success(JSON.stringify(response.body));
       settingStore.backendStatus = true;
     }
   };

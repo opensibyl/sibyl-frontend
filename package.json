@@ -10,9 +10,11 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "element-plus": "^2.2.13",
+    "echarts": "^5.4.1",
+    "element-plus": "^2.2.28",
     "sibyl_javascript_client": "^0.13.1",
-    "vue": "^3.2.36"
+    "vue": "^3.2.36",
+    "vue-json-pretty": "^2.2.3"
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.1.4",

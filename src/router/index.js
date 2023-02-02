@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const home = () => import("../components/Home.vue");
 const about = () => import("../components/About.vue");
 const settings = () => import("../components/Settings.vue");
-const funcbasic = () => import("../components/BasicFunctions.vue");
+const funcbasic = () => import("../components/FuncFileQuery.vue");
 
 const routes = [
   {

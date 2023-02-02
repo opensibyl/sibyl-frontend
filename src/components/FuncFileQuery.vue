@@ -1,10 +1,40 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
-import { ElMessage } from "element-plus";
+import { ElNotification } from "element-plus";
 import { useSettingStore } from "../stores/setting";
-import VueJsonPretty from 'vue-json-pretty';
-import 'vue-json-pretty/lib/styles.css';
+import VueJsonPretty from "vue-json-pretty";
+import "vue-json-pretty/lib/styles.css";
+
+import * as echarts from "echarts";
+
+// 基于准备好的dom，初始化echarts实例
+const chart1 = ref();
+let myChart = null;
+onMounted(() => {
+  myChart = echarts.init(chart1.value, null, {
+    width: 600,
+    height: 400,
+  });
+  // 绘制图表
+  myChart.setOption({
+    title: {
+      text: "ECharts 入门示例",
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+    },
+    yAxis: {},
+    series: [
+      {
+        name: "销量",
+        type: "bar",
+        data: [5, 20, 36, 10, 10, 20],
+      },
+    ],
+  });
+});
 
 const settingStore = useSettingStore();
 const curFile = ref("");
@@ -18,12 +48,12 @@ const requestFile = () => {
   var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification(JSON.stringify(error));
     } else {
-      ElMessage.success("files pulled")
+      ElNotification.success("files pulled");
       fileList.value = response.body;
     }
-}
+  };
   api.apiV1FileGet(settingStore.curRepo, settingStore.curRev, null, callback);
 };
 
@@ -32,7 +62,7 @@ const requestFunction = () => {
   var api = new OpenapiForSibyl2Server.BasicQueryApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
     } else {
       funcResult.value = response.body;
     }
@@ -51,7 +81,7 @@ const requestClass = () => {
   var api = new OpenapiForSibyl2Server.BasicQueryApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
     } else {
       classResult.value = response.body;
     }
@@ -70,7 +100,7 @@ const requestFuncctx = () => {
   var api = new OpenapiForSibyl2Server.BasicQueryApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElMessage.error(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
     } else {
       funcctxResult.value = response.body;
     }
@@ -85,10 +115,10 @@ const requestFuncctx = () => {
 };
 
 const pullAll = () => {
-    requestFunction()
-    requestClass()
-    requestFuncctx()
-}
+  requestFunction();
+  requestClass();
+  requestFuncctx();
+};
 </script>
 
 <template>
@@ -118,9 +148,15 @@ const pullAll = () => {
     </el-form-item>
 
     <el-tabs type="border-card" class="m-3">
-      <el-tab-pane label="Functions"><vue-json-pretty :data=funcResult /></el-tab-pane>
-      <el-tab-pane label="Classes"><vue-json-pretty :data=classResult /></el-tab-pane>
-      <el-tab-pane label="FunctionContexts"><vue-json-pretty :data=funcctxResult /></el-tab-pane>
+      <el-tab-pane label="Functions"
+        ><vue-json-pretty :data="funcResult"
+      /></el-tab-pane>
+      <el-tab-pane label="Classes"
+        ><vue-json-pretty :data="classResult"
+      /></el-tab-pane>
+      <el-tab-pane label="FunctionContexts" style="width: 400px height: 400px">
+        <div ref="chart1" style="width: 400px height: 400px"></div>
+      </el-tab-pane>
     </el-tabs>
   </el-form>
 </template>
