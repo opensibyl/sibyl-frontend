@@ -8,7 +8,7 @@ const settingStore = useSettingStore();
 const input = ref(settingStore.backendUrl);
 
 const save = () => {
-  settingStore.updateUrl(input);
+  settingStore.backendUrl = input.value;
   ElMessage.success("url saved");
 };
 
@@ -19,10 +19,10 @@ const testConnection = () => {
   var callback = function (error, data, response) {
     if (error) {
       ElMessage.error(JSON.stringify(error));
-      settingStore.switchStatus(false);
+      settingStore.backendStatus = false;
     } else {
       ElMessage.success(JSON.stringify(response.body));
-      settingStore.switchStatus(true);
+      settingStore.backendStatus = true;
     }
   };
   api.opsVersionGet(callback);
@@ -30,9 +30,15 @@ const testConnection = () => {
 </script>
 
 <template>
-  <el-input v-model="input" style="width: 200px; margin: 20px" />
-  <el-button @click="save" type="primary">Save</el-button>
-  <el-button @click="testConnection">Test connection</el-button>
+  <el-form label-width="120px" style="margin: 20px">
+    <el-form-item label="Backend Url">
+      <el-input v-model="input" />
+    </el-form-item>
+    <el-form-item>
+      <el-button @click="save" type="primary">Save</el-button>
+      <el-button @click="testConnection">Test connection</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <style>

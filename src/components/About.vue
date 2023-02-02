@@ -1,13 +1,15 @@
 <template>
-  <container style="width: 200px; margin: 20px">
-    <h2>Issue: </h2>
-    <a href="https://github.com/opensibyl/sibyl2/issues/25"
-      >https://github.com/opensibyl/sibyl2/issues/25</a
-    >
-    <br />
-    <h2>Repo: </h2>
-    <a href="https://github.com/opensibyl/sibyl-frontend"
-      >https://github.com/opensibyl/sibyl-frontend</a
-    >
-  </container>
+  <el-form label-width="120px" style="margin: 20px">
+    <p>We need your help :)</p>
+    <el-form-item label="Issue">
+      <a href="https://github.com/opensibyl/sibyl2/issues/25"
+        >https://github.com/opensibyl/sibyl2/issues/25</a
+      >
+    </el-form-item>
+    <el-form-item label="Repo">
+      <a href="https://github.com/opensibyl/sibyl-frontend"
+        >https://github.com/opensibyl/sibyl-frontend</a
+      >
+    </el-form-item>
+  </el-form>
 </template>

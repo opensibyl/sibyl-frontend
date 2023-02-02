@@ -7,12 +7,5 @@ export const useSettingStore = defineStore("setting", {
       backendStatus: false,
     };
   },
-  actions: {
-    updateUrl(url) {
-      this.backendUrl = url;
-    },
-    switchStatus(status) {
-      this.backendStatus = status;
-    },
-  },
+  actions: {},
 });

@@ -7,17 +7,13 @@
     @close="handleClose"
     router
   >
-    <el-menu-item index="/home">
+    <el-menu-item index="/func/basic">
       <el-icon><icon-menu /></el-icon>
-      <span>Home</span>
+      <span>BasicFunction</span>
     </el-menu-item>
     <el-menu-item index="/settings">
       <el-icon><setting /></el-icon>
       <span>Settings</span>
-    </el-menu-item>
-    <el-menu-item index="/about">
-      <el-icon><info-filled /></el-icon>
-      <span>About</span>
     </el-menu-item>
   </el-menu>
 </template>
