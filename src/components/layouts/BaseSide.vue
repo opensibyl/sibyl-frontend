@@ -9,7 +9,7 @@
   >
     <el-menu-item index="/func/basic">
       <el-icon><icon-menu /></el-icon>
-      <span>BasicFunction</span>
+      <span>Basic Query</span>
     </el-menu-item>
     <!-- <el-menu-item index="/settings">
       <el-icon><setting /></el-icon>

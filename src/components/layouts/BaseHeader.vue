@@ -103,12 +103,6 @@ requestRepo();
           :value="item"
         />
       </el-select>
-      <el-button @click="sync" class="m-3" style="width: fit-content">
-        <el-icon style="height: var(--ep-menu-item-height)"
-          ><RefreshRight
-        /></el-icon>
-        Refresh
-      </el-button>
     </el-container>
 
     <div class="flex-grow" />

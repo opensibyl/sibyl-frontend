@@ -22,6 +22,7 @@ declare module '@vue/runtime-core' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    FuncFileQuery: typeof import('./components/FuncFileQuery.vue')['default']
     Home: typeof import('./components/Home.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

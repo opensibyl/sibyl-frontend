@@ -3,6 +3,8 @@ import { ref } from "vue";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 import { ElMessage } from "element-plus";
 import { useSettingStore } from "../stores/setting";
+import VueJsonPretty from 'vue-json-pretty';
+import 'vue-json-pretty/lib/styles.css';
 
 const settingStore = useSettingStore();
 const curFile = ref("");
@@ -18,9 +20,10 @@ const requestFile = () => {
     if (error) {
       ElMessage.error(JSON.stringify(error));
     } else {
+      ElMessage.success("files pulled")
       fileList.value = response.body;
     }
-  };
+}
   api.apiV1FileGet(settingStore.curRepo, settingStore.curRev, null, callback);
 };
 
@@ -42,6 +45,50 @@ const requestFunction = () => {
     callback
   );
 };
+
+const requestClass = () => {
+  var apiClient = settingStore.getApiClient();
+  var api = new OpenapiForSibyl2Server.BasicQueryApi(apiClient);
+  var callback = function (error, data, response) {
+    if (error) {
+      ElMessage.error(JSON.stringify(error));
+    } else {
+      classResult.value = response.body;
+    }
+  };
+  api.apiV1ClazzGet(
+    settingStore.curRepo,
+    settingStore.curRev,
+    curFile.value,
+    null,
+    callback
+  );
+};
+
+const requestFuncctx = () => {
+  var apiClient = settingStore.getApiClient();
+  var api = new OpenapiForSibyl2Server.BasicQueryApi(apiClient);
+  var callback = function (error, data, response) {
+    if (error) {
+      ElMessage.error(JSON.stringify(error));
+    } else {
+      funcctxResult.value = response.body;
+    }
+  };
+  api.apiV1FuncctxGet(
+    settingStore.curRepo,
+    settingStore.curRev,
+    curFile.value,
+    null,
+    callback
+  );
+};
+
+const pullAll = () => {
+    requestFunction()
+    requestClass()
+    requestFuncctx()
+}
 </script>
 
 <template>
@@ -50,7 +97,7 @@ const requestFunction = () => {
       <el-select
         v-model="curFile"
         class="m-4"
-        placeholder="Rev"
+        placeholder="Select File"
         size="large"
         clearable
         filterable
@@ -63,17 +110,17 @@ const requestFunction = () => {
         />
       </el-select>
       <el-button @click="requestFile" class="m-3" style="width: fit-content"
-        >Pull Files</el-button
+        >Sync File List</el-button
       >
-      <el-button @click="requestFunction" class="m-3" style="width: fit-content"
+      <el-button @click="pullAll" class="m-3" style="width: fit-content"
         >Pull Data</el-button
       >
     </el-form-item>
 
     <el-tabs type="border-card" class="m-3">
-      <el-tab-pane label="Functions">{{ funcResult }}</el-tab-pane>
-      <el-tab-pane label="Classes">{{ classResult }}</el-tab-pane>
-      <el-tab-pane label="FunctionContexts">{{ funcctxResult }}</el-tab-pane>
+      <el-tab-pane label="Functions"><vue-json-pretty :data=funcResult /></el-tab-pane>
+      <el-tab-pane label="Classes"><vue-json-pretty :data=classResult /></el-tab-pane>
+      <el-tab-pane label="FunctionContexts"><vue-json-pretty :data=funcctxResult /></el-tab-pane>
     </el-tabs>
   </el-form>
 </template>

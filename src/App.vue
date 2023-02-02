@@ -21,8 +21,4 @@ html,
 body {
   height: 100%;
 }
-
-.element-plus-logo {
-  width: 50%;
-}
 </style>
