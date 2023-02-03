@@ -10,43 +10,37 @@
     <el-sub-menu index="1">
       <template #title
         ><el-icon><icon-menu></icon-menu></el-icon>
-        <span>文件维度</span></template
+        <span>File Level</span></template
       >
-      <el-menu-item index="/file/basic"><span>基础查询</span></el-menu-item>
-      <el-menu-item index="/file/reference" disabled
-        ><span>文件关联</span></el-menu-item
+      <el-menu-item index="/file/basic"><span>Extract</span></el-menu-item>
+      <el-menu-item index="/file/reference"
+        ><span>Reference Map</span></el-menu-item
       >
     </el-sub-menu>
     <el-sub-menu index="2">
       <template #title
         ><el-icon><icon-menu></icon-menu></el-icon>
-        <span>函数维度</span></template
+        <span>Function Level</span></template
       >
       <el-menu-item index="/func/search" disabled
-        ><span>全局查询</span></el-menu-item
+        ><span>Global Search</span></el-menu-item
       >
       <el-menu-item index="/func/reference" disabled
-        ><span>函数关联</span></el-menu-item
+        ><span>Reference Map</span></el-menu-item
       >
       <el-menu-item index="/func/reference" disabled
-        ><span>冷热函数</span></el-menu-item
+        ><span>Heat Map</span></el-menu-item
       >
     </el-sub-menu>
     <el-sub-menu index="3">
       <template #title
         ><el-icon><icon-menu></icon-menu></el-icon>
-        <span>类维度</span></template
+        <span>Class Level</span></template
       >
     </el-sub-menu>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import {
-  Menu as IconMenu,
-  Setting,
-  InfoFilled,
-  RefreshRight,
-} from "@element-plus/icons-vue";
+import { Menu as IconMenu } from "@element-plus/icons-vue";
 </script>

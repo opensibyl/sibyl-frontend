@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 const about = () => import("../components/About.vue");
 const settings = () => import("../components/Settings.vue");
-const funcbasic = () => import("../components/FuncFileQuery.vue");
+const filebasic = () => import("../components/PageFileQuery.vue");
+const fileReference = () => import("../components/PageFileReference.vue");
 
 const routes = [
   {
@@ -21,7 +22,12 @@ const routes = [
   {
     path: "/file/basic",
     name: "file/basic",
-    component: funcbasic,
+    component: filebasic,
+  },
+  {
+    path: "/file/reference",
+    name: "file/reference",
+    component: fileReference,
   },
 ];
 

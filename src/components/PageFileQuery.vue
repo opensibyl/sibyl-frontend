@@ -1,40 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref } from "vue";
 import * as OpenapiForSibyl2Server from "sibyl_javascript_client";
 import { ElNotification } from "element-plus";
 import { useSettingStore } from "../stores/setting";
 import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
-
-import * as echarts from "echarts";
-
-// 基于准备好的dom，初始化echarts实例
-const chart1 = ref();
-let myChart = null;
-onMounted(() => {
-  myChart = echarts.init(chart1.value, null, {
-    width: 600,
-    height: 400,
-  });
-  // 绘制图表
-  myChart.setOption({
-    title: {
-      text: "ECharts 入门示例",
-    },
-    tooltip: {},
-    xAxis: {
-      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-    },
-    yAxis: {},
-    series: [
-      {
-        name: "销量",
-        type: "bar",
-        data: [5, 20, 36, 10, 10, 20],
-      },
-    ],
-  });
-});
 
 const settingStore = useSettingStore();
 const curFile = ref("");
@@ -45,11 +15,16 @@ const classResult = ref("");
 const funcctxResult = ref("");
 
 const requestFile = () => {
+  if (settingStore.curRepo == "" || settingStore.curRev == "") {
+    ElNotification.warning("Please fill the repo and rev first");
+    return;
+  }
+
   var apiClient = settingStore.getApiClient();
   var api = new OpenapiForSibyl2Server.ScopeApi(apiClient);
   var callback = function (error, data, response) {
     if (error) {
-      ElNotification(JSON.stringify(error));
+      ElNotification.error(JSON.stringify(error));
     } else {
       ElNotification.success("files pulled");
       fileList.value = response.body;
@@ -57,6 +32,9 @@ const requestFile = () => {
   };
   api.apiV1FileGet(settingStore.curRepo, settingStore.curRev, null, callback);
 };
+onMounted(() => {
+  requestFile();
+});
 
 const requestFunction = () => {
   var apiClient = settingStore.getApiClient();
@@ -103,7 +81,13 @@ const requestFuncctx = () => {
     if (error) {
       ElNotification.error(JSON.stringify(error));
     } else {
-      funcctxResult.value = response.body;
+      funcctxResult.value = response.body.map((each) => {
+        return {
+          name: each["signature"],
+          calls: each.calls,
+          reverseCalls: each.reverseCalls,
+        };
+      });
     }
   };
   api.apiV1FuncctxGet(
@@ -124,7 +108,7 @@ const pullAll = () => {
 
 <template>
   <el-form>
-    <el-form-item label="所选文件" class="m-3">
+    <el-form-item label="Extract metadata" class="m-3">
       <el-select
         v-model="curFile"
         placeholder="Select File"
@@ -142,10 +126,10 @@ const pullAll = () => {
     ></el-form-item>
     <el-form-item class="m-3">
       <el-button @click="requestFile" style="width: fit-content"
-        >刷新文件列表</el-button
+        >Refresh File List</el-button
       >
       <el-button @click="pullAll" style="width: fit-content" type="primary"
-        >开始拉取逻辑</el-button
+        >Pull</el-button
       >
     </el-form-item>
 
@@ -156,8 +140,8 @@ const pullAll = () => {
       <el-tab-pane label="Classes"
         ><vue-json-pretty :data="classResult"
       /></el-tab-pane>
-      <el-tab-pane label="FunctionContexts" style="width: 400px height: 400px">
-        <div ref="chart1" style="width: 400px height: 400px"></div>
+      <el-tab-pane label="FunctionContexts">
+        <vue-json-pretty :data="funcctxResult" />
       </el-tab-pane>
     </el-tabs>
   </el-form>
