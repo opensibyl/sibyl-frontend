@@ -106,6 +106,8 @@ requestRepo();
           :value="item"
         />
       </el-select>
+
+      <el-button class="m-3" v-on:click="requestRepo">Refresh</el-button>
     </el-container>
 
     <div class="flex-grow" />
