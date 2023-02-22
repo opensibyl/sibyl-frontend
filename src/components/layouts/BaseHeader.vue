@@ -72,8 +72,7 @@ requestRepo();
         v-model="settingStore.backendUrl"
         size="large"
         style="width: fit-content"
-        ><template #prepend>http://</template></el-input
-      >
+      ></el-input>
       <el-select
         v-model="settingStore.curRepo"
         class="m-2"

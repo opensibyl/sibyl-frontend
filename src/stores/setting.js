@@ -12,9 +12,10 @@ export const useSettingStore = defineStore("setting", {
   },
   actions: {
     getApiClient() {
-      var apiClient = new OpenapiForSibyl2Server.ApiClient(
-        "http://" + this.backendUrl
-      );
+      if (!this.backendUrl.startsWith("http")) {
+        this.backendUrl = "http://" + this.backendUrl;
+      }
+      var apiClient = new OpenapiForSibyl2Server.ApiClient(this.backendUrl);
       apiClient.defaultHeaders = {};
       return apiClient;
     },
