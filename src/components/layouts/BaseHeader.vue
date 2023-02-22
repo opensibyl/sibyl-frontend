@@ -69,7 +69,7 @@ requestRepo();
     <el-container>
       <el-input
         class="m-2"
-        v-model="backendUrl"
+        v-model="settingStore.backendUrl"
         size="large"
         style="width: fit-content"
         ><template #prepend>http://</template></el-input
